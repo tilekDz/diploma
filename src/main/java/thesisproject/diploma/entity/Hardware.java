@@ -8,12 +8,13 @@ import javax.persistence.*;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity(name = "HARDWARE_DIPLOMA")
 public class Hardware {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "HARDWARE_NAME")
     private String name;
@@ -25,5 +26,5 @@ public class Hardware {
     private String campusBlock;
 
     @Column(name = "ROOM_NUMBER")
-    private int roomNumber;
+    private Long roomNumber;
 }
