@@ -50,10 +50,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.
                 authorizeRequests()
                 .antMatchers("/", "/sources/**", "/jkc", "/fgrd", "/regUser", "/homePage").permitAll()
-                .antMatchers("/login", "/image/**").permitAll()
-                .antMatchers("/superAdmin", "/regAdmin").hasAuthority("SUPER_ADMIN")
-            .antMatchers().hasAnyAuthority("ADMIN, SUPER_ADMIN")
-                .antMatchers("/admin/**").hasAuthority("SUPER_ADMIN").anyRequest()
+                .antMatchers("/login", "/image/**", "/getStock/**","/addToHardware/**", "/saveToHardware" ,"/addStock").permitAll()
+                .anyRequest()
                 .authenticated()
                 .and().csrf().disable()
                 .formLogin().successHandler(customizeAuthenticationSuccessHandler)
@@ -70,7 +68,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web
                 .ignoring()
-                .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**","/fonts/**", "/register/**","/sass/**","/register/**","/register/css/**","/register/fonts/**","/register/images/**","/register/js/**","/register/vendor/**","/folderforadmin/**");
+                .antMatchers("/resources/**","/templates/**" ,"/static/**", "/css/**", "/js/**", "/images/**","/fonts/**", "/register/**","/sass/**","/register/**","/register/css/**","/register/fonts/**","/register/images/**","/register/js/**","/register/vendor/**","/folderforadmin/**");
     }
 
 }

@@ -1,10 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-<h1>I am here</h1>
+<table>
+    <th:block th:each="s : ${stock}">
+        <tr>
+            <td th:text="${s.name}"></td>
+            <td th:text="${s.description}">...</td>
+            <td th:text="${s.quantity}">...</td>
+            <td><a th:if="${s.quantity>0}" th:href="@{/getStock/__${s.id}__}">Get Details</a></td>
+            <td><a th:if="${s.quantity>0}" th:href="@{/addToHardware/__${s.id}__}">Add To Hardware</a></td>
+        </tr>
+    </th:block>
+</table>
+<a th:href="@{/addStock}">Add Stock</a>
 </body>
 </html>

@@ -8,12 +8,13 @@ import javax.persistence.*;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity(name = "STOCK_DIPLOMA")
 public class Stock {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "HARDWARE_NAME")
     private String name;
@@ -22,5 +23,5 @@ public class Stock {
     private String description;
 
     @Column(name = "HARDWARE_QUANTITY")
-    private long quantity;
+    private Long quantity;
 }
