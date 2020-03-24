@@ -80,10 +80,10 @@
 <div class="row">
     <div class="col-md-6 col-sm-12 col-lg-6 col-md-offset-3">
         <div class="panel panel-primary">
-            <div class="panel-heading">Add to Stock
+            <div class="panel-heading">Add New Manager
             </div>
             <div class="panel-body">
-                <div name="myform">
+                <form name="myform" th:action="@{/regUser}" method="post" th:object="${user}" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="myName">User Name *</label>
                         <input id="myName" name="name" class="form-control" type="text">
@@ -100,8 +100,8 @@
                         <span id="error_age" class="text-danger"></span>
                     </div>
 
-                    <a th:href="@{/homePage}"><button>Submit</button></a>
-                </div>
+                    <a th:href="@{/regUser}"><button>Submit</button></a>
+                </form>
 
             </div>
         </div>

@@ -21,8 +21,7 @@
         <a href="#home" class="w3-bar-item w3-button">Inventory Management System</a>
         <!-- Right-sided navbar links. Hide them on small screens -->
         <div class="w3-right w3-hide-small">
-            <a href="#about" class="w3-bar-item w3-button">Stock</a>
-            <a href="#menu" class="w3-bar-item w3-button">Main functions</a>
+            <a th:href="@{/getStockPage}"  class="w3-bar-item w3-button">Stock</a>
             <a th:href="@{/logout}" class="w3-bar-item w3-button">Log out</a>
         </div>
     </div>
@@ -30,73 +29,13 @@
 
 <!-- Header -->
 <header class="w3-display-container w3-content w3-wide" style="max-width:1000px;min-width:500px" id="home">
-    <div class="w3-image" style="width:1000px; height:500px">
+    <div class="w3-image" style="width:1000px; height:550px">
     <div class="w3-display-bottomleft w3-padding-large">
         <h1 style="color: #5fbae9">INVENTORY MANAGEMENT SYSTEM</h1>
+        <a th:href="@{/getStockPage}"><button>See Stock</button></a>
     </div>
     </div>
 </header>
-
-<!-- Page content -->
-<div class="w3-content" style="max-width:1100px">
-
-    <!-- About Section -->
-    <div class="w3-row w3-padding-64" id="about">
-        <div class="w3-col">
-            <h2 style="color: #5fbae9; padding-top: 40px">Stock</h2>
-            <table class="table table-striped table-responsive-md btn-table">
-
-                <thead>
-                <tr>
-                    <th>Item Name</th>
-                    <th>Item Description</th>
-                    <th>Quantity</th>
-                    <th>Get Details</th>
-                    <th>Add to Hardware</th>
-                </tr>
-                </thead>
-
-                <tbody>
-                <th:block th:each="s : ${stock}">
-                    <tr>
-                        <td th:text="${s.name}"></td>
-                        <td th:text="${s.description}">...</td>
-                        <td th:text="${s.quantity}">...</td>
-                        <td><a th:href="@{/getStock/__${s.id}__}"><button type="button" class="btn btn-teal btn-rounded btn-sm m-0">Try</button></a></td>
-                        <td><a th:if="${s.quantity>0}" th:href="@{/addToHardware/__${s.id}__}"> <button type="button" class="btn btn-teal btn-rounded btn-sm m-0">Try</button></a></td>
-                    </tr>
-                </th:block>
-                </tbody>
-
-            </table>
-        </div>
-    </div>
-
-    <hr>
-
-    <!-- Menu Section -->
-    <div class="w3-row w3-padding-64" id="menu">
-        <div class="w3-col l6 w3-padding-large">
-            <h1 class="w3-center">Main functions</h1><br>
-            <a th:href="@{/addStock}">
-                <button type="button" class="btn btn-primary">Add items to Stock</button>
-            </a>
-
-            <a th:href="@{/regUser}">
-                <button type="button" class="btn btn-success">Add new USER</button>
-            </a>
-        </div>
-
-        <div class="w3-col l6 w3-padding-large">
-            <img th:src="@{image/control.jpg}" class="w3-round w3-image w3-opacity-min" alt="Menu" style="width:100%">
-        </div>
-    </div>
-
-    <hr>
-
-    <!-- End page content -->
-</div>
-
 <!-- Footer -->
 <footer class="w3-center w3-light-grey w3-padding-32">
     <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-text-green">w3.css</a></p>

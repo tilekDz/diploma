@@ -9,6 +9,7 @@ import thesisproject.diploma.repository.RoleRepository;
 import thesisproject.diploma.repository.UserDiplomaRepository;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashSet;
 
 @Service
@@ -26,6 +27,7 @@ public class UserDiplomaService {
     public UserDiploma saveUser(UserDiploma user, String role) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(true);
+        user.setDate(new Date());
         Role userRole = roleRepository.findByRole(role);
         user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
         return userDiplomaRepository.save(user);

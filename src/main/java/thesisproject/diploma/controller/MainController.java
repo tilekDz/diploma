@@ -34,6 +34,13 @@ public class MainController {
         return modelAndView;
     }
 
+    @RequestMapping(value = {"/getStockPage"}, method = RequestMethod.GET)
+    public ModelAndView getStockPage(){
+        ModelAndView modelAndView = new ModelAndView("stockPage");
+        modelAndView.addObject("stock", stockService.getAllStock());
+        return modelAndView;
+    }
+
     @RequestMapping(value = {"/saveStock"}, method = RequestMethod.POST)
     public ModelAndView saveStock(@ModelAttribute Stock stock){
         if (stock != null){

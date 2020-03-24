@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Set;
 
 @Data
@@ -32,4 +33,7 @@ public class UserDiploma {
 
     @Column(name = "USER_ACTIVE")
     private Boolean active;
+
+    @Column(name = "CREATED_DATE")
+    private Date date;
 }

@@ -19,6 +19,9 @@ public class Stock {
     @Column(name = "HARDWARE_NAME")
     private String name;
 
+    @Column(name = "HARDWARE_TYPE")
+    private String type;
+
     @Column(name = "HARDWARE_DESCRIPTION", length = 4000)
     private String description;
 
