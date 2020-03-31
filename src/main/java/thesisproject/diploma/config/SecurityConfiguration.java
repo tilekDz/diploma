@@ -50,7 +50,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.
                 authorizeRequests()
                 .antMatchers("/", "/index", "/resources/**", "/sources/**", "/jkc", "/fgrd", "/regUser", "/homePage").permitAll()
-                .antMatchers("/login" , "/static/**", "/getStockPage", "/fonts/**", "/images/**", "/js/**", "/image/**", "/getStock/**","/addToHardware/**", "/saveToHardware" ,"/addStock").permitAll()
+                .antMatchers("/login" , "/static/**", "/getStockPage", "/searchStock/", "/images/**", "/js/**", "/image/**", "/getStock/**","/addToHardware/**", "/saveToHardware" ,"/addStock").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and().csrf().disable()

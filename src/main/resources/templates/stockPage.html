@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<script type="text/javascript" th:src="@{/js/app.js}"></script>
 <style>
     body {font-family: "Times New Roman", Georgia, Serif;}
     h1, h2, h3, h4, h5, h6 {
@@ -42,15 +43,19 @@
                 <button type="button" class="btn btn-success">Add new USER</button>
             </a>
             </div>
-            <table class="table table-striped table-responsive-md btn-table">
+            <form action="#" id="searchForm" th:action="@{/searchStock}" method="post" th:object="${pattern}">
+                <div class="table-responsive">
+            <table class="table table-striped table-responsive-md btn-table" data-pagination="true" data-side-pagination="server">
 
                 <thead>
                 <tr>
-                    <th>Item Name</th>
-                    <th>Item Description</th>
+                    <th><input type="text" class="form-control input-filter" placeholder="Item Name" th:field="*{name}"/></th>
+                    <th><input type="text" class="form-control input-filter" placeholder="Item Description" th:field="*{description}"/></th>
+                    <th><input type="text" class="form-control input-filter" placeholder="Type" th:field="*{type}"/></th>
                     <th>Quantity</th>
                     <th>Get Details</th>
                     <th>Add to Hardware</th>
+                    <th><button type="submit">Search</button></th>
                 </tr>
                 </thead>
 
@@ -59,6 +64,7 @@
                     <tr>
                         <td th:text="${s.name}"></td>
                         <td th:text="${s.description}">...</td>
+                        <td th:text="${s.type}">...</td>
                         <td th:text="${s.quantity}">...</td>
                         <td><a th:href="@{/getStock/__${s.id}__}"><button type="button" class="btn btn-teal btn-rounded btn-sm m-0">Try</button></a></td>
                         <td><a th:if="${s.quantity>0}" th:href="@{/addToHardware/__${s.id}__}"> <button type="button" class="btn btn-teal btn-rounded btn-sm m-0">Try</button></a></td>
@@ -67,6 +73,15 @@
                 </tbody>
 
             </table>
+                    <div th:if="${stock.totalPages > 0}" class="pagination"
+                         th:each="pageNumber : ${pageNumbers}">
+                        <a th:href="@{/listStock(size=${stock.size}, page=${pageNumber})}"
+                           th:text=${pageNumber}
+                           th:class="${pageNumber==stock.number + 1} ? active"></a>
+                    </div>
+                </div>
+            </form>
+            <!--<object th:include="partial/pagination" th:remove="tag"></object>-->
         </div>
     </div>
     <!-- End page content -->

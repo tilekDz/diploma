@@ -22,20 +22,16 @@ public class HardwareService {
     }
 
     public List<Hardware> getAllHardwares(){
-        return hardwareRepository.findAll();
+        return hardwareRepository.findAllByIsDeletedFalse();
     }
 
 
     public List<Hardware> getAllByRoomNumber(Long number){
-        return hardwareRepository.findAllByRoomNumber(number);
+        return hardwareRepository.findAllByRoomNumberAndIsDeletedFalse(number);
     }
 
     public Hardware addToHardwareFromStock(Long stockId, String name, String description, Long roomNumber, String campusBlock){
-        Hardware hardware = new Hardware();
-        hardware.setName(name);
-        hardware.setDescription(description);
-        hardware.setRoomNumber(roomNumber);
-        hardware.setCampusBlock(campusBlock);
+        Hardware hardware = new Hardware(name, description, campusBlock, roomNumber, false);
 
         Stock stock = stockService.getById(stockId);
         stock.setQuantity(stock.getQuantity()-1);
