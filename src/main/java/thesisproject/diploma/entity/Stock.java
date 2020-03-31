@@ -27,4 +27,10 @@ public class Stock {
 
     @Column(name = "HARDWARE_QUANTITY")
     private Long quantity;
+
+    @Column(name = "IS_DELETED")
+    private Boolean isDeleted;
+
+    @Transient
+    private Integer percent;
 }
