@@ -9,5 +9,7 @@ import java.util.List;
 @Repository
 public interface HardwareRepository extends JpaRepository<Hardware, Long> {
     
-    List<Hardware> findAllByRoomNumber(Long number);
+    List<Hardware> findAllByRoomNumberAndIsDeletedFalse(Long number);
+
+    List<Hardware> findAllByIsDeletedFalse();
 }

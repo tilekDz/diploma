@@ -27,4 +27,15 @@ public class Hardware {
 
     @Column(name = "ROOM_NUMBER")
     private Long roomNumber;
+
+    @Column(name = "IS_DELETED")
+    private Boolean isDeleted;
+
+    public Hardware(String name, String description, String campusBlock, Long roomNumber, Boolean isDeleted){
+        this.name= name;
+        this.description = description;
+        this.campusBlock = campusBlock;
+        this.roomNumber = roomNumber;
+        this.isDeleted = isDeleted;
+    }
 }
