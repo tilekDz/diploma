@@ -21,6 +21,9 @@ public class UserDiploma {
     @Column(name = "USER_NAME")
     private String name;
 
+    @Column(name = "USER_LAST_NAME")
+    private String lastName;
+
     @Column(name = "USER_EMAIL")
     private String email;
 

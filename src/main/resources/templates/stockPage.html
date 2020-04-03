@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<title>Home page</title>
+<title>IMS-AIU</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -18,11 +18,12 @@
 
 <!-- Navbar (sit on top) -->
 <div class="w3-top">
-    <div class="w3-bar w3-padding w3-card" style="letter-spacing:4px; background-color: #5fbae9">
+    <div class="w3-bar w3-padding w3-card" style="letter-spacing:4px; background-color: #2d2652">
         <a href="#home" class="w3-bar-item w3-button">Inventory Management System</a>
         <!-- Right-sided navbar links. Hide them on small screens -->
         <div class="w3-right w3-hide-small">
             <a th:href="@{/homePage}" class="w3-bar-item w3-button">Home</a>
+            <a th:href="@{/userPage}" class="w3-bar-item w3-button">User page</a>
             <a th:href="@{/logout}" class="w3-bar-item w3-button">Log out</a>
         </div>
     </div>
@@ -34,14 +35,14 @@
     <!-- About Section -->
     <div class="w3-row w3-padding-64" id="about">
         <div class="w3-col">
-            <h2 style="color: #5fbae9; padding-top: 40px">Stock</h2>
+            <h2 style="color: #2d2652; padding-top: 40px">Stock</h2>
             <div class="w3-col l6 w3-padding-large">
             <a th:href="@{/addStock}">
                 <button type="button" class="btn btn-primary">Add items to Stock</button>
             </a>
-            <a th:href="@{/regUser}">
-                <button type="button" class="btn btn-success">Add new USER</button>
-            </a>
+                <a th:href="@{/getHardwarePage}">
+                    <button type="button" class="btn btn-primary">See items in blocks</button>
+                </a>
             </div>
             <form action="#" id="searchForm" th:action="@{/searchStock}" method="post" th:object="${pattern}">
                 <div class="table-responsive">
@@ -53,7 +54,7 @@
                     <th><input type="text" class="form-control input-filter" placeholder="Item Description" th:field="*{description}"/></th>
                     <th><input type="text" class="form-control input-filter" placeholder="Type" th:field="*{type}"/></th>
                     <th>Quantity</th>
-                    <th>Get Details</th>
+                    <th>Details</th>
                     <th>Add to Hardware</th>
                     <th><button type="submit">Search</button></th>
                 </tr>
@@ -88,8 +89,8 @@
 </div>
 
 <!-- Footer -->
-<footer class="w3-center w3-light-grey w3-padding-32">
-    <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-text-green">w3.css</a></p>
+<footer class="w3-center w3-light-grey" style="position: relative; clear: both; text-align: center; bottom: 0; margin-top: 50px; height: 2.5rem; color: #2d2652">
+    <p title="IMS-AIU" target="_blank" class="w3-hover-text-green">Created by Mederbek Abdyldaev | 2020x</p>
 </footer>
 
 </body>

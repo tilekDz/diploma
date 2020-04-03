@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<title>IMS-AIU</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<script type="text/javascript" th:src="@{/js/app.js}"></script>
+<style>
+    body {font-family: "Times New Roman", Georgia, Serif;}
+    h1, h2, h3, h4, h5, h6 {
+        font-family: "Playfair Display";
+        letter-spacing: 5px;
+    }
+</style>
+<body>
+
+<!-- Navbar (sit on top) -->
+<div class="w3-top">
+    <div class="w3-bar w3-padding w3-card" style="letter-spacing:4px; background-color: #2d2652">
+        <a href="#home" class="w3-bar-item w3-button">Inventory Management System</a>
+        <!-- Right-sided navbar links. Hide them on small screens -->
+        <div class="w3-right w3-hide-small">
+            <a th:href="@{/homePage}" class="w3-bar-item w3-button">Home</a>
+            <a th:href="@{/userPage}" class="w3-bar-item w3-button">User page</a>
+            <a th:href="@{/logout}" class="w3-bar-item w3-button">Log out</a>
+        </div>
+    </div>
+</div>
+
+<!-- Page content -->
+<div class="w3-content" style="max-width:1100px">
+
+    <!-- About Section -->
+    <div class="w3-row w3-padding-64" id="about">
+        <div class="w3-col">
+            <h2 style="color: #2d2652; padding-top: 40px">Items in blocks</h2>
+            <form action="#" id="searchForm" th:action="@{/searchHardware}" method="post" th:object="${pattern}">
+                <div class="table-responsive">
+                    <table class="table table-striped table-responsive-md btn-table" data-pagination="true" data-side-pagination="server">
+
+                        <thead>
+                        <tr>
+                            <th><input type="text" class="form-control input-filter" placeholder="Item Name" th:field="*{name}"/></th>
+                            <th><input type="text" class="form-control input-filter" placeholder="Item Description" th:field="*{description}"/></th>
+                            <th><input type="text" class="form-control input-filter" placeholder="Type" th:field="*{type}"/></th>
+                            <th><input type="text" class="form-control input-filter" placeholder="Campus Block" th:field="*{campusBlock}"/></th>
+                            <th><input type="number" class="form-control input-filter" placeholder="Number of ROOM" th:field="*{roomNumber}"/></th>
+                            <th>Added date</th>
+                            <th>Details</th>
+                            <th><button type="submit">Search</button></th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <th:block th:each="s : ${hardwares}">
+                            <tr>
+                                <td th:text="${s.name}"></td>
+                                <td th:text="${s.description}">...</td>
+                                <td th:text="${s.type}">...</td>
+                                <td th:text="${s.campusBlock}">...</td>
+                                <td th:text="${s.roomNumber}">...</td>
+                                <td th:text="${s.createdDate}">...</td>
+                                <td><a th:href="@{/getHardware/__${s.id}__}"><button type="button" class="btn btn-teal btn-rounded btn-sm m-0">Try</button></a></td>
+                            </tr>
+                        </th:block>
+                        </tbody>
+
+                    </table>
+                    <div th:if="${hardwares.totalPages > 0}" class="pagination"
+                         th:each="pageNumber : ${pageNumbers}">
+                        <a th:href="@{/listStock(size=${hardwares.size}, page=${pageNumber})}"
+                           th:text=${pageNumber}
+                           th:class="${pageNumber==hardwares.number + 1} ? active"></a>
+                    </div>
+                </div>
+            </form>
+            <!--<object th:include="partial/pagination" th:remove="tag"></object>-->
+        </div>
+    </div>
+    <!-- End page content -->
+</div>
+
+<!-- Footer -->
+<footer class="w3-center w3-light-grey" style="position: relative; clear: both; text-align: center; bottom: 0; margin-top: 50px; height: 2.5rem; color: #2d2652">
+    <p title="IMS-AIU" target="_blank" class="w3-hover-text-green">Created by Mederbek Abdyldaev | 2020x</p>
+</footer>
+
+</body>
+</html>

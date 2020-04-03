@@ -1,82 +1,35 @@
-<!--<!DOCTYPE html>-->
-<!--<html xmlns="http://www.w3.org/1999/xhtml"-->
-      <!--xmlns:th="http://www.thymeleaf.org">-->
-
-<!--<head>-->
-    <!--<title>Registration</title>-->
-    <!--<meta charset="UTF-8">-->
-    <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
-
-<!--</head>-->
-<!--<body>-->
-
-
-<!--<div class="container-login100">-->
-    <!--<div class="wrap-login100 p-l-55 p-r-55 p-t-80 p-b-30">-->
-			<!--<span class="login100-form-title p-b-37" style="padding-left: 60px">-->
-					<!--Sign Up:-->
-			<!--</span>-->
-        <!--<form class="login100-form validate-form" th:action="@{/regUser}" method="post" th:object="${user}" enctype="multipart/form-data">-->
-
-            <!--<div class="wrap-input100 validate-input m-b-20" id="tur3">-->
-                <!--<input class="input100" type="text" th:field="*{name}" name="firstName" placeholder="First name">-->
-                <!--<span class="focus-input100"></span>-->
-            <!--</div>-->
-
-            <!--<label th:if="${#fields.hasErrors('email')}" th:errors="*{email}"   class="validation-message"></label>-->
-            <!--<div class="wrap-input100 validate-input m-b-25">-->
-                <!--<input class="input100" type="text" name="email"  th:field="*{email}" placeholder="Email">-->
-                <!--<span class="focus-input100"></span>-->
-            <!--</div>-->
-            <!--<label th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="validation-message"></label>-->
-            <!--<div class="wrap-input100 validate-input m-b-25">-->
-                <!--<input class="input100" type="password" name="password"   th:field="*{password}" placeholder="Password">-->
-                <!--<span class="focus-input100"></span>-->
-            <!--</div>-->
-
-            <!--&lt;!&ndash;<div class="container-login100-form-btn">&ndash;&gt;-->
-                <!--&lt;!&ndash;<button class="login100-form-btn" type="submit">&ndash;&gt;-->
-                    <!--&lt;!&ndash;Sign Up&ndash;&gt;-->
-                <!--&lt;!&ndash;</button>&ndash;&gt;-->
-            <!--&lt;!&ndash;</div>&ndash;&gt;-->
-            <!--<div class="container-login100-form-btn">-->
-                <!--<a th:href="@{/login}">-->
-                    <!--<button class="login100-form-btn">-->
-                    <!--Sign Up-->
-                    <!--</button>-->
-                <!--</a>-->
-            <!--</div>-->
-            <!--<div class="text-center">-->
-
-                <!--<a th:href="@{/login}" class="txt2 hov1">-->
-                    <!--Sign IN-->
-                <!--</a>-->
-            <!--</div>-->
-        <!--</form>-->
-
-
-    <!--</div>-->
-
-<!--</div>-->
-
-<!--</body>-->
-<!--</html>-->
-
-
-
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Add to Stock</title>
+    <title>IMS-AIU</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 </head>
+<style>
+    body {font-family: "Times New Roman", Georgia, Serif;}
+    h1, h2, h3, h4, h5, h6 {
+        font-family: "Playfair Display";
+        letter-spacing: 5px;
+    }
+</style>
 <body>
+<div class="w3-top" style="color: white;">
+    <div class="w3-bar w3-padding w3-card" style="letter-spacing:4px; background-color: #2d2652">
+        <a href="#home" class="w3-bar-item w3-button">Inventory Management System</a>
+        <!-- Right-sided navbar links. Hide them on small screens -->
+        <div class="w3-right w3-hide-small">
+            <a th:href="@{/homePage}"  class="w3-bar-item w3-button">Home</a>
+            <a th:href="@{/getStockPage}"  class="w3-bar-item w3-button">Stock</a>
+            <a th:href="@{/userPage}" class="w3-bar-item w3-button">User page</a>
+            <a th:href="@{/logout}" class="w3-bar-item w3-button">Log out</a>
+        </div>
+    </div>
+</div>
 <div class="row">
     <div class="col-md-6 col-sm-12 col-lg-6 col-md-offset-3">
         <div class="panel panel-primary">
@@ -107,5 +60,9 @@
         </div>
     </div>
 </div>
+
+<footer class="w3-center w3-light-grey" style="position: relative; clear: both; text-align: center; bottom: 0; margin-top: 50px; height: 2.5rem; color: #2d2652">
+    <p title="IMS-AIU" target="_blank" class="w3-hover-text-green">Created by Mederbek Abdyldaev | 2020x</p>
+</footer>
 </body>
 </html>

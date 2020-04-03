@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-        xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org">
 <title>IMS-AIU</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -20,9 +20,8 @@
         <a href="#home" class="w3-bar-item w3-button">Inventory Management System</a>
         <!-- Right-sided navbar links. Hide them on small screens -->
         <div class="w3-right w3-hide-small">
-            <a th:href="@{/getStockPage}"  class="w3-bar-item w3-button">Stock</a>
-            <a th:href="@{/userPage}" class="w3-bar-item w3-button">User page</a>
-            <a th:href="@{/logout}" class="w3-bar-item w3-button">Log out</a>
+            <!--<a th:href="@{/getStockPage}"  class="w3-bar-item w3-button">Stock</a>-->
+            <a th:href="@{/login}" class="w3-bar-item w3-button">Log in</a>
         </div>
     </div>
 </div>
@@ -30,14 +29,14 @@
 <!-- Header -->
 <header class="w3-display-container w3-content w3-wide" style="max-width:1000px;min-width:500px" id="home">
     <div class="w3-image" style="width:1000px; height:550px">
-    <div class="w3-display-bottomleft w3-padding-large" style="text-align: center">
-        <img style="" src="https://upload.wikimedia.org/wikipedia/en/thumb/0/07/Ala-Too_International_University_Seal.png/220px-Ala-Too_International_University_Seal.png">
-        <div style="height: 3px; margin-top: 80px; background-color: #2d2652"></div>
-        <h1 style="color: #2d2652">ALA-TOO INTERNATIONAL UNIVERSITY</h1>
-        <h1 style="color: #2d2652">INVENTORY MANAGEMENT SYSTEM</h1>
-        <div style="height: 3px;background-color: #2d2652"></div>
-        <!--<a th:href="@{/getStockPage}"><button>See Stock</button></a>-->
-    </div>
+        <div class="w3-display-bottomleft w3-padding-large" style="text-align: center">
+            <img style="" src="https://upload.wikimedia.org/wikipedia/en/thumb/0/07/Ala-Too_International_University_Seal.png/220px-Ala-Too_International_University_Seal.png">
+            <div style="height: 3px; margin-top: 80px; background-color: #2d2652"></div>
+            <h1 style="color: #2d2652">ALA-TOO INTERNATIONAL UNIVERSITY</h1>
+            <h1 style="color: #2d2652">INVENTORY MANAGEMENT SYSTEM</h1>
+            <div style="height: 3px;background-color: #2d2652"></div>
+            <!--<a th:href="@{/getStockPage}"><button>See Stock</button></a>-->
+        </div>
     </div>
 </header>
 <!-- Footer -->

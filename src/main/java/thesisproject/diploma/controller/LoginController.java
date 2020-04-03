@@ -13,7 +13,7 @@ public class LoginController {
 
     @RequestMapping(value={"/"}, method = RequestMethod.GET)
     public String homePage(){
-        return "login";
+        return "index";
     }
 
 

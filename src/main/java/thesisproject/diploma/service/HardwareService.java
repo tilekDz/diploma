@@ -1,6 +1,9 @@
 package thesisproject.diploma.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import thesisproject.diploma.entity.Hardware;
 import thesisproject.diploma.entity.Stock;
@@ -21,8 +24,8 @@ public class HardwareService {
         return hardwareRepository.save(hardware);
     }
 
-    public List<Hardware> getAllHardwares(){
-        return hardwareRepository.findAllByIsDeletedFalse();
+    public Page<Hardware> getAllHardwares(Specification specification, Pageable pageable) {
+        return hardwareRepository.findAll(specification, pageable);
     }
 
 
@@ -30,8 +33,8 @@ public class HardwareService {
         return hardwareRepository.findAllByRoomNumberAndIsDeletedFalse(number);
     }
 
-    public Hardware addToHardwareFromStock(Long stockId, String name, String description, Long roomNumber, String campusBlock){
-        Hardware hardware = new Hardware(name, description, campusBlock, roomNumber, false);
+    public Hardware addToHardwareFromStock(Long stockId, String name, String description, String type, Long roomNumber, String campusBlock){
+        Hardware hardware = new Hardware(name, description, campusBlock, type, roomNumber, false);
 
         Stock stock = stockService.getById(stockId);
         stock.setQuantity(stock.getQuantity()-1);
