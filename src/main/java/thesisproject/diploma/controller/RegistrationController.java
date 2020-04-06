@@ -1,6 +1,8 @@
 package thesisproject.diploma.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +24,10 @@ public class RegistrationController {
 
     @RequestMapping(value="/regUser", method = RequestMethod.GET)
     public ModelAndView registrationUser(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if(auth.getPrincipal() == null || auth.getPrincipal().equals("anonymousUser")){
+            return new ModelAndView("index");
+        }
         ModelAndView modelAndView = new ModelAndView();
         UserDiploma user = new UserDiploma();
         modelAndView.addObject("user", user);

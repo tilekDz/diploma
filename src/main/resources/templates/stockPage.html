@@ -17,9 +17,9 @@
 <body>
 
 <!-- Navbar (sit on top) -->
-<div class="w3-top">
+<div class="w3-top" style="color: white;">
     <div class="w3-bar w3-padding w3-card" style="letter-spacing:4px; background-color: #2d2652">
-        <a href="#home" class="w3-bar-item w3-button">Inventory Management System</a>
+        <a th:href="@{/homePage}" class="w3-bar-item w3-button">Inventory Management System</a>
         <!-- Right-sided navbar links. Hide them on small screens -->
         <div class="w3-right w3-hide-small">
             <a th:href="@{/homePage}" class="w3-bar-item w3-button">Home</a>
@@ -38,10 +38,10 @@
             <h2 style="color: #2d2652; padding-top: 40px">Stock</h2>
             <div class="w3-col l6 w3-padding-large">
             <a th:href="@{/addStock}">
-                <button type="button" class="btn btn-primary">Add items to Stock</button>
+                <button type="button" class="btn btn-primary" style="background-color: #2d2652;">Add items to Stock</button>
             </a>
                 <a th:href="@{/getHardwarePage}">
-                    <button type="button" class="btn btn-primary">See items in blocks</button>
+                    <button type="button" class="btn btn-primary" style="background-color: #2d2652;">See items in blocks</button>
                 </a>
             </div>
             <form action="#" id="searchForm" th:action="@{/searchStock}" method="post" th:object="${pattern}">
@@ -87,11 +87,6 @@
     </div>
     <!-- End page content -->
 </div>
-
-<!-- Footer -->
-<footer class="w3-center w3-light-grey" style="position: relative; clear: both; text-align: center; bottom: 0; margin-top: 50px; height: 2.5rem; color: #2d2652">
-    <p title="IMS-AIU" target="_blank" class="w3-hover-text-green">Created by Mederbek Abdyldaev | 2020x</p>
-</footer>
 
 </body>
 </html>

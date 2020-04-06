@@ -18,7 +18,7 @@
 <!-- Navigation -->
 <div class="w3-top" style="color: white;">
     <div class="w3-bar w3-padding w3-card" style="letter-spacing:4px; background-color: #2d2652">
-        <a href="#home" class="w3-bar-item w3-button">Inventory Management System</a>
+        <a th:href="@{/homePage}" class="w3-bar-item w3-button">Inventory Management System</a>
         <!-- Right-sided navbar links. Hide them on small screens -->
         <div class="w3-right w3-hide-small">
             <a th:href="@{/homePage}"  class="w3-bar-item w3-button">Home</a>
@@ -29,9 +29,12 @@
 </div>
 
 <!-- Header -->
-<header class="w3-display-container w3-content w3-wide" style="max-width:1000px;min-width:500px" id="home">
+<header class="w3-display-container w3-content w3-wide" style="max-width:1000px;min-width:500px; margin-top: 9%" id="home">
     <div class="w3-image" style="width:1000px; height:550px">
         <div style="text-align: center">
+            <a th:href="@{/regUser}" style="margin-left: -100%;">
+                <button type="button" class="btn btn-primary" style="background-color: #2d2652;">Add new User</button>
+            </a>
             <h1 style="color: #2d2652">INVENTORY MANAGEMENT SYSTEM</h1>
             <p class="lead">- User Page</p>
             <div style="height: 3px;background-color: #2d2652"></div>
@@ -40,7 +43,7 @@
     </div>
 </header>
 
-<section id="about" style="margin-top: -400px">
+<section id="about" style="margin-top: -20%">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mx-auto">
@@ -52,10 +55,6 @@
     </div>
 </section>
 
-<!-- Footer -->
-<footer class="w3-center w3-light-grey" style="position: relative; clear: both; text-align: center; bottom: 0; margin-top: 300px; height: 2.5rem; color: #2d2652">
-    <p title="IMS-AIU" target="_blank" class="w3-hover-text-green">Created by Mederbek Abdyldaev | 2020x</p>
-</footer>
 </body>
 
 </html>
