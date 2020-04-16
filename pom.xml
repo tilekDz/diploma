@@ -61,7 +61,28 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
-    </dependencies>
+
+		<dependency>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>core</artifactId>
+			<version>3.3.2</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>4.0.1</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.docx4j/docx4j -->
+		<dependency>
+			<groupId>org.docx4j</groupId>
+			<artifactId>docx4j</artifactId>
+			<version>6.0.0</version>
+		</dependency>
+
+	</dependencies>
 
 	<build>
 		<plugins>
@@ -71,5 +92,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
