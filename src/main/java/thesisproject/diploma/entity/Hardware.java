@@ -38,6 +38,10 @@ public class Hardware {
     @Column(name = "CREATED_DATE")
     private Date createdDate;
 
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL,orphanRemoval = true)
+    @JoinColumn(name = "FILE_TEMPLATE_INFO_ID")
+    private FileInfo fileTemplate;
+
     public Hardware(String name, String description, String campusBlock, String type, Long roomNumber, Boolean isDeleted){
         this.name= name;
         this.type = type;

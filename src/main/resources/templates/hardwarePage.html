@@ -36,19 +36,20 @@
     <div class="w3-row w3-padding-64" id="about">
         <div class="w3-col">
             <h2 style="color: #2d2652; padding-top: 40px">Items in blocks</h2>
-            <form action="#" id="searchForm" th:action="@{/searchHardware}" method="post" th:object="${pattern}">
+            <form action="#" id="searchForm" th:action="@{/searchHardware}" name="pattern" method="post" th:object="${pattern}">
                 <div class="table-responsive">
                     <table class="table table-striped table-responsive-md btn-table" data-pagination="true" data-side-pagination="server">
 
                         <thead>
                         <tr>
-                            <th><input type="text" class="form-control input-filter" placeholder="Item Name" th:field="*{name}"/></th>
-                            <th><input type="text" class="form-control input-filter" placeholder="Item Description" th:field="*{description}"/></th>
-                            <th><input type="text" class="form-control input-filter" placeholder="Type" th:field="*{type}"/></th>
-                            <th><input type="text" class="form-control input-filter" placeholder="Campus Block" th:field="*{campusBlock}"/></th>
-                            <th><input type="number" class="form-control input-filter" placeholder="Number of ROOM" th:field="*{roomNumber}"/></th>
+                            <th><input type="text" name="name" class="form-control input-filter" placeholder="Item Name" th:field="*{name}"/></th>
+                            <th><input type="text" name="description" class="form-control input-filter" placeholder="Item Description" th:field="*{description}"/></th>
+                            <th><input type="text" name="type" class="form-control input-filter" placeholder="Type" th:field="*{type}"/></th>
+                            <th><input type="text" name="campusBlock" class="form-control input-filter" placeholder="Campus Block" th:field="*{campusBlock}"/></th>
+                            <th><input type="number" name="numberRoom" class="form-control input-filter" placeholder="Number of ROOM" th:field="*{roomNumber}"/></th>
                             <th>Added date</th>
                             <th>Details</th>
+                            <th>See QR-code</th>
                             <th><button type="submit">Search</button></th>
                         </tr>
                         </thead>
@@ -63,6 +64,7 @@
                                 <td th:text="${s.roomNumber}">...</td>
                                 <td th:text="${s.createdDate}">...</td>
                                 <td><a th:href="@{/getHardware/__${s.id}__}"><button type="button" class="btn btn-teal btn-rounded btn-sm m-0">Try</button></a></td>
+                                <td><a th:if="${s.fileTemplate!=null}" th:href="@{/downloadQR/__${s.id}__}"><button type="button" class="btn btn-teal btn-rounded btn-sm m-0">QR-code</button></a></td>
                             </tr>
                         </th:block>
                         </tbody>
@@ -70,7 +72,7 @@
                     </table>
                     <div th:if="${hardwares.totalPages > 0}" class="pagination"
                          th:each="pageNumber : ${pageNumbers}">
-                        <a th:href="@{/listStock(size=${hardwares.size}, page=${pageNumber})}"
+                        <a th:href="@{/listHardware(name=*{name},type=*{type}, description=*{description}, campusBlock=*{campusBlock}, numberRoom=*{roomNumber},size=${hardwares.size}, page=${pageNumber})}"
                            th:text=${pageNumber}
                            th:class="${pageNumber==hardwares.number + 1} ? active"></a>
                     </div>

@@ -9,6 +9,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -59,6 +60,28 @@ public class HardwareController {
         if(auth.getPrincipal() == null || auth.getPrincipal().equals("anonymousUser")){
             return new ModelAndView("index");
         }
+        return getModelAndView("hardwarePage", hardwarePattern, page, size);
+    }
+
+    @RequestMapping(value = "/listHardware")
+    public ModelAndView listHardware(
+            @ModelAttribute HardwarePattern hardwarePattern,
+            @RequestParam("name") String name,
+            @RequestParam("type") String type,
+            @RequestParam("description") String description,
+            @RequestParam("campusBlock") String campusBlock,
+            @RequestParam("numberRoom") Long numberRoom,
+            @RequestParam("page") Optional<Integer> page,
+            @RequestParam("size") Optional<Integer> size) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if(auth.getPrincipal() == null || auth.getPrincipal().equals("anonymousUser")){
+            return new ModelAndView("index");
+        }
+        hardwarePattern.setName(name);
+        hardwarePattern.setDescription(description);
+        hardwarePattern.setType(type);
+        hardwarePattern.setCampusBlock(campusBlock);
+        hardwarePattern.setRoomNumber(numberRoom);
         return getModelAndView("hardwarePage", hardwarePattern, page, size);
     }
 

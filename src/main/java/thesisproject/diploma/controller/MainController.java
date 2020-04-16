@@ -1,5 +1,8 @@
 package thesisproject.diploma.controller;
 
+import com.google.zxing.WriterException;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.docx4j.org.apache.poi.util.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
 import org.springframework.data.domain.Page;
@@ -11,8 +14,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import thesisproject.diploma.commons.CyrilicToAsciiConvertUtil;
+import thesisproject.diploma.entity.FileInfo;
 import thesisproject.diploma.entity.Hardware;
 import thesisproject.diploma.entity.Stock;
 import thesisproject.diploma.entity.UserDiploma;
@@ -26,6 +32,10 @@ import thesisproject.diploma.specification.SpecificatinHelper;
 import thesisproject.diploma.specification.StockSpecification;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -91,13 +101,11 @@ public class MainController {
     }
 
     @RequestMapping(value = {"/saveStock"}, method = RequestMethod.POST)
-    public ModelAndView saveStock(@ModelAttribute Stock stock,
-                                  @RequestParam("page") Optional<Integer> page,
-                                  @RequestParam("size") Optional<Integer> size){
+    public String saveStock(@ModelAttribute Stock stock){
         if (stock != null){
             stockService.save(stock);
         }
-        return getModelAndView("redirect:/homePage", new StockPattern(), page, size);
+        return "redirect:/getStockPage";
     }
 
     @RequestMapping("/getStock/{id}")
@@ -123,17 +131,15 @@ public class MainController {
     }
 
     @RequestMapping(value = "/saveToHardware", method = RequestMethod.POST)
-    public ModelAndView addHardware(@RequestParam("id") Long id,
+    public String addHardware(@RequestParam("id") Long id,
                                     @RequestParam("name") String name,
                                     @RequestParam("description") String description,
                                     @RequestParam("type") String type,
                                     @RequestParam("roomNumber") Long roomNumber,
-                                    @RequestParam("campus") String campusBlock,
-                                    @RequestParam("page") Optional<Integer> page,
-                                    @RequestParam("size") Optional<Integer> size){
+                                    @RequestParam("campus") String campusBlock) throws Exception {
         hardwareService.addToHardwareFromStock(id, name, description, type, roomNumber, campusBlock);
 
-        return getModelAndView("homePage", new StockPattern(), page, size);
+        return "redirect:/getHardwarePage";
     }
 
     @RequestMapping(value = "/listStock", method = RequestMethod.GET)
@@ -157,6 +163,19 @@ public class MainController {
             return new ModelAndView("index");
         }
         return getModelAndView("stockPage", stockPattern, page, size);
+    }
+
+    @RequestMapping(value = "/downloadQR/{id}")
+    @ResponseBody
+    public String downloadQR(@PathVariable("id") Long id, HttpServletResponse response) throws IOException {
+        FileInfo downFile = hardwareService.findById(id).getFileTemplate();
+        response.setContentType("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+        response.setContentLength((int) downFile.getFileData().getContent().length);
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + CyrilicToAsciiConvertUtil.transliterate(downFile.getName()) + "\"");
+
+        FileCopyUtils.copy(downFile.getFileData().getContent(), response.getOutputStream());
+//        IOUtils.copy(new FileInputStream(new File(String.valueOf(downFile))), response.getOutputStream());
+        return "redirect:/getStockPage";
     }
 
     private ModelAndView getModelAndView(String view, StockPattern stockPattern, Optional<Integer> page, Optional<Integer> size){
@@ -184,4 +203,10 @@ public class MainController {
         modelAndView.addObject("pattern", stockPattern);
         return modelAndView;
     }
+
+//    @RequestMapping(value = "/downloadQR", method = RequestMethod.GET, produces = "application/pdf")
+//    public byte[] downloadPdf(@RequestParam(value = "id") Long id) throws IOException {
+//        FileInfo downFile = hardwareService.findById(id).getFileTemplate();
+//        return (downFile.getFileData().getContent());
+//    }
 }
