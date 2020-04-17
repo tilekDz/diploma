@@ -79,7 +79,7 @@ public class HardwareService {
     public void addToHardwareFromStock(Long stockId, String name, String description, String type, Long roomNumber, String campusBlock) throws Exception {
         Hardware hardware = new Hardware(name, description, campusBlock, type, roomNumber, false);
         save(hardware);
-        File qrFile = createQRCode(hardware.getId());
+        File qrFile = createQRCode(hardware);
         FileDTO fileDTO = new FileDTO(qrFile.getName(), "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
                 Files.readAllBytes(qrFile.toPath()), new FileInputStream(qrFile));
         FileInfoDTO fileInfoDTO = fileInfoService.prepareFileInfoDTO(hardware.getFileTemplate(), fileDTO);
@@ -91,14 +91,17 @@ public class HardwareService {
         save(hardware);
     }
 
-    private File createQRCode(Long id) throws Exception {
-        String qrCodeText = id.toString();
+    private File createQRCode(Hardware hardware) throws Exception {
+        String qrCodeText = "ID: "+ hardware.getId().toString() + "\n"+
+                "NAME: " + hardware.getName() + "\n"+
+                "CAMPUS: " + hardware.getCampusBlock() + "\n" +
+                "ROOM: " + hardware.getRoomNumber().toString() + "\n" +
+                "DATE: " + hardware.getCreatedDate().toString();
         String filePath = "JD.png";
         int size = 125;
         String fileType = "png";
         File qrFile = new File(filePath);
         createQRImage(qrFile, qrCodeText, size, fileType);
-        System.out.println("DONE");
 
 
         WordprocessingMLPackage wordMLPackage =
