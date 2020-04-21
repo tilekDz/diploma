@@ -72,8 +72,12 @@ public class HardwareService {
     }
 
 
-    public List<Hardware> getAllByRoomNumber(Long number){
+    public List<Hardware> getAllByRoomNumberAndDeletedFalse(Long number){
         return hardwareRepository.findAllByRoomNumberAndIsDeletedFalse(number);
+    }
+
+    public List<Hardware> getAllByRoomNumberAndCampusAndDeletedFalse(Long number, String campus){
+        return hardwareRepository.findAllByRoomNumberAndCampusBlockAndIsDeletedFalse(number, campus);
     }
 
     public void addToHardwareFromStock(Long stockId, String name, String description, String type, Long roomNumber, String campusBlock) throws Exception {

@@ -12,17 +12,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import thesisproject.diploma.service.ReportDocxCreate;
 import thesisproject.diploma.entity.Hardware;
-import thesisproject.diploma.entity.Stock;
 import thesisproject.diploma.pagination.Pager;
 import thesisproject.diploma.pattern.HardwarePattern;
-import thesisproject.diploma.pattern.StockPattern;
 import thesisproject.diploma.service.HardwareService;
 import thesisproject.diploma.service.StockService;
 import thesisproject.diploma.service.UserDiplomaService;
 import thesisproject.diploma.specification.HardwareSpecification;
-import thesisproject.diploma.specification.StockSpecification;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -43,6 +43,9 @@ public class HardwareController {
 
     @Autowired
     private UserDiplomaService userDiplomaService;
+
+    @Autowired
+    private ReportDocxCreate reportDocxCreate;
 
     @RequestMapping("/getHardware/{id}")
     public ModelAndView showHotel(Model model, @PathVariable("id") Long id) {
@@ -96,6 +99,24 @@ public class HardwareController {
         hardwarePattern.setCampusBlock(campusBlock);
         hardwarePattern.setRoomNumber(numberRoom);
         return getModelAndView("hardwarePage", hardwarePattern, page, size);
+    }
+
+    @RequestMapping(value={"/createReport"}, method = RequestMethod.GET)
+    public ModelAndView reportPage(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if(auth.getPrincipal() == null || auth.getPrincipal().equals("anonymousUser")){
+            return new ModelAndView("index");
+        }
+        ModelAndView modelAndView = new ModelAndView("createReport");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/createReportWord", method = RequestMethod.GET)
+    public void outToWord(@RequestParam("campusBlock") String campusBlock,
+                          @RequestParam("numberRoom") Long numberRoom,
+                          HttpServletResponse response, RedirectAttributes redirectAttributes){
+        response.setHeader("Content-Disposition", "attachment; filename=\"word.docx\"");
+        reportDocxCreate.createDocxFile(response, numberRoom, campusBlock);
     }
 
     private ModelAndView getModelAndView(String view, HardwarePattern hardwarePattern, Optional<Integer> page, Optional<Integer> size){
