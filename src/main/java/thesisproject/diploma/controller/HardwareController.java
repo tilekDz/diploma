@@ -10,28 +10,30 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import thesisproject.diploma.service.ReportDocxCreate;
 import thesisproject.diploma.entity.Hardware;
-import thesisproject.diploma.entity.Stock;
+import thesisproject.diploma.pagination.Pager;
 import thesisproject.diploma.pattern.HardwarePattern;
-import thesisproject.diploma.pattern.StockPattern;
 import thesisproject.diploma.service.HardwareService;
 import thesisproject.diploma.service.StockService;
 import thesisproject.diploma.service.UserDiplomaService;
 import thesisproject.diploma.specification.HardwareSpecification;
-import thesisproject.diploma.specification.StockSpecification;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static thesisproject.diploma.pagination.PaginationConstant.BUTTONS_TO_SHOW;
+
 @Controller
 public class HardwareController {
+
+    private static final int[] PAGE_SIZES = { 5, 10};
 
     @Autowired
     private StockService stockService;
@@ -41,6 +43,20 @@ public class HardwareController {
 
     @Autowired
     private UserDiplomaService userDiplomaService;
+
+    @Autowired
+    private ReportDocxCreate reportDocxCreate;
+
+    @RequestMapping("/getHardware/{id}")
+    public ModelAndView showHotel(Model model, @PathVariable("id") Long id) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if(auth.getPrincipal() == null || auth.getPrincipal().equals("anonymousUser")){
+            return new ModelAndView("index");
+        }
+        Hardware hardware = hardwareService.findById(id);
+        model.addAttribute("hardware", hardware);
+        return new ModelAndView("hardwareDetail");
+    }
 
     @RequestMapping(value = {"/getHardwarePage"}, method = RequestMethod.GET)
     public ModelAndView getHardwarePage(@RequestParam("page") Optional<Integer> page,
@@ -85,6 +101,24 @@ public class HardwareController {
         return getModelAndView("hardwarePage", hardwarePattern, page, size);
     }
 
+    @RequestMapping(value={"/createReport"}, method = RequestMethod.GET)
+    public ModelAndView reportPage(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if(auth.getPrincipal() == null || auth.getPrincipal().equals("anonymousUser")){
+            return new ModelAndView("index");
+        }
+        ModelAndView modelAndView = new ModelAndView("createReport");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/createReportWord", method = RequestMethod.GET)
+    public void outToWord(@RequestParam("campusBlock") String campusBlock,
+                          @RequestParam("numberRoom") Long numberRoom,
+                          HttpServletResponse response, RedirectAttributes redirectAttributes){
+        response.setHeader("Content-Disposition", "attachment; filename=\"word.docx\"");
+        reportDocxCreate.createDocxFile(response, numberRoom, campusBlock);
+    }
+
     private ModelAndView getModelAndView(String view, HardwarePattern hardwarePattern, Optional<Integer> page, Optional<Integer> size){
         ModelAndView modelAndView = new ModelAndView(view);
 
@@ -106,6 +140,11 @@ public class HardwareController {
             modelAndView.addObject("pageNumbers", pageNumbers);
         }
 
+        Pager pager = new Pager(hardwares.getTotalPages(),hardwares.getNumber(),BUTTONS_TO_SHOW);
+
+        modelAndView.addObject("selectedPageNumber", pageSize);
+        modelAndView.addObject("pager", pager);
+        modelAndView.addObject("pageSizes", PAGE_SIZES);
         modelAndView.addObject("hardwares", hardwares);
         modelAndView.addObject("pattern", hardwarePattern);
         return modelAndView;

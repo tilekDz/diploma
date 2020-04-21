@@ -42,9 +42,12 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static org.springframework.data.domain.PageRequest.of;
+import static thesisproject.diploma.pagination.PaginationConstant.BUTTONS_TO_SHOW;
 
 @Controller
 public class MainController {
+
+    private static final int[] PAGE_SIZES = { 5, 10};
 
     @Autowired
     private StockService stockService;
@@ -144,14 +147,20 @@ public class MainController {
 
     @RequestMapping(value = "/listStock", method = RequestMethod.GET)
     public ModelAndView listStock(
-            Model model,
+            @ModelAttribute StockPattern stockPattern,
+            @RequestParam("name") String name,
+            @RequestParam("type") String type,
+            @RequestParam("description") String description,
             @RequestParam("page") Optional<Integer> page,
             @RequestParam("size") Optional<Integer> size) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if(auth.getPrincipal() == null || auth.getPrincipal().equals("anonymousUser")){
             return new ModelAndView("index");
         }
-        return getModelAndView("stockPage", new StockPattern(), page, size);
+        stockPattern.setName(name);
+        stockPattern.setDescription(description);
+        stockPattern.setType(type);
+        return getModelAndView("stockPage", stockPattern, page, size);
     }
 
     @RequestMapping(value = "/searchStock")
@@ -175,7 +184,7 @@ public class MainController {
 
         FileCopyUtils.copy(downFile.getFileData().getContent(), response.getOutputStream());
 //        IOUtils.copy(new FileInputStream(new File(String.valueOf(downFile))), response.getOutputStream());
-        return "redirect:/getStockPage";
+        return "redirect:/getHardwarePage";
     }
 
     private ModelAndView getModelAndView(String view, StockPattern stockPattern, Optional<Integer> page, Optional<Integer> size){
@@ -199,7 +208,12 @@ public class MainController {
             modelAndView.addObject("pageNumbers", pageNumbers);
         }
 
+        Pager pager = new Pager(stocks.getTotalPages(),stocks.getNumber(),BUTTONS_TO_SHOW);
+
+        modelAndView.addObject("selectedPageNumber", pageSize);
         modelAndView.addObject("stock", stocks);
+        modelAndView.addObject("pager", pager);
+        modelAndView.addObject("pageSizes", PAGE_SIZES);
         modelAndView.addObject("pattern", stockPattern);
         return modelAndView;
     }
