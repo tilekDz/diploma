@@ -1,4 +1,4 @@
-insert into role_diploma (role_id, role) VALUES (1, 'MANAGER');
+insert into role_diploma (role_id, role) VALUES (1,'MANAGER');
 
 insert into user_diploma (user_name, user_active, user_email,
                           user_password, created_date, user_last_name)
