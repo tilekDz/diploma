@@ -2,112 +2,58 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 
-<head>
+<title>IMS-AIU</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="shortcut icon" href="https://upload.wikimedia.org/wikipedia/en/thumb/0/07/Ala-Too_International_University_Seal.png/220px-Ala-Too_International_University_Seal.png" />
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>IMS-AIU</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <link rel="shortcut icon" href="https://upload.wikimedia.org/wikipedia/en/thumb/0/07/Ala-Too_International_University_Seal.png/220px-Ala-Too_International_University_Seal.png" />
-
-
-    <!-- Custom styles for this template -->
-    <link href="css/scrolling-nav.css" rel="stylesheet">
-
-</head>
-
-<body id="page-top">
 <style>
-    header {
-        padding: 156px 0 100px;
-    }
-
-    section {
-        padding: 150px 0;
+    body {font-family: "Times New Roman", Georgia, Serif;}
+    h1, h2, h3, h4, h5, h6 {
+        font-family: "Playfair Display";
+        letter-spacing: 5px;
     }
 </style>
-<script>
-    (function($) {
-        "use strict"; // Start of use strict
-
-        // Smooth scrolling using jQuery easing
-        $('a.js-scroll-trigger[href*="#"]:not([href="#"])').click(function() {
-            if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
-                var target = $(this.hash);
-                target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
-                if (target.length) {
-                    $('html, body').animate({
-                        scrollTop: (target.offset().top - 56)
-                    }, 1000, "easeInOutExpo");
-                    return false;
-                }
-            }
-        });
-
-        // Closes responsive menu when a scroll trigger link is clicked
-        $('.js-scroll-trigger').click(function() {
-            $('.navbar-collapse').collapse('hide');
-        });
-
-        // Activate scrollspy to add active class to navbar items on scroll
-        $('body').scrollspy({
-            target: '#mainNav',
-            offset: 56
-        });
-
-    })(jQuery); // End of use strict
-</script>
+<body>
 <!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-    <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="#page-top">Top</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" th:href="@{/homePage}">Back to Home</a>
-                </li>
-            </ul>
+<div class="w3-top" style="color: white;">
+    <div class="w3-bar w3-padding w3-card" style="letter-spacing:4px; background-color: #2d2652">
+        <a th:href="@{/homePage}" class="w3-bar-item w3-button">Inventory Management System</a>
+        <!-- Right-sided navbar links. Hide them on small screens -->
+        <div class="w3-right w3-hide-small">
+            <a th:href="@{/homePage}"  class="w3-bar-item w3-button">Home</a>
+            <a th:href="@{/getStockPage}"  class="w3-bar-item w3-button">Stock</a>
+            <a th:href="@{/getHardwarePage}"  class="w3-bar-item w3-button">Stock</a>
+            <a th:href="@{/logout}" class="w3-bar-item w3-button">Log out</a>
         </div>
     </div>
-</nav>
+</div>
 
-<header class="bg-primary text-white">
-    <div class="container text-center">
-        <h1>Inventory Management System</h1>
-        <p class="lead">Detail page of Item</p>
+<!-- Header -->
+<header class="w3-display-container w3-content w3-wide" style="max-width:1000px;min-width:500px; margin-top: 9%" id="home">
+    <div class="w3-image" style="width:1000px; height:550px">
+        <div style="text-align: center">
+            <h1 style="color: #2d2652">INVENTORY MANAGEMENT SYSTEM</h1>
+            <p class="lead">- Hardware Page</p>
+            <div style="height: 3px;background-color: #2d2652"></div>
+            <!--<a th:href="@{/getStockPage}"><button>See Stock</button></a>-->
+        </div>
     </div>
 </header>
 
-<section id="about">
+<section id="about" style="margin-top: -20%">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mx-auto">
                 <h2 th:text="'Title: '+ ${stock.name}"></h2>
-                <p class="lead" th:text="'Description: ' + ${stock.description}"></p>
-                <p class="lead" th:text="'Quantity: ' + ${stock.quantity}"></p>
+                <h2 th:text="'Type: '+ ${stock.type}"></h2>
+                <h2 th:text="'Description: '+ ${stock.description}"></h2>
             </div>
         </div>
     </div>
 </section>
-
-<!-- Bootstrap core JavaScript -->
-<script src="vendor/jquery/jquery.min.js"></script>
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-<!-- Plugin JavaScript -->
-<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-<!-- Custom JavaScript for this theme -->
-<script src="js/scrolling-nav.js"></script>
 
 </body>
 

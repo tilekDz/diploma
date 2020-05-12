@@ -41,22 +41,27 @@
             <div class="panel-body">
                 <form name="myform" th:action="@{/regUser}" method="post" th:object="${user}" enctype="multipart/form-data">
                     <div class="form-group">
-                        <label for="myName">User Name *</label>
+                        <label for="myName">User First Name *</label>
                         <input id="myName" name="name" class="form-control" type="text">
                         <span id="error_name" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label for="email">Email *</label>
+                        <label for="myLastName">User Last Name *</label>
+                        <input id="myLastName" name="lastName" class="form-control" type="text">
+                        <span id="error_lastName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Username or Email *</label>
                         <input id="email" name="email"  class="form-control" type="text">
-                        <span id="error_lastname" class="text-danger"></span>
+                        <span id="error_email" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label for="password">Password *</label>
                         <input id="password"  class="form-control" name="password" type="password">
-                        <span id="error_age" class="text-danger"></span>
+                        <span id="error_password" class="text-danger"></span>
                     </div>
 
-                    <a th:href="@{/regUser}"><button type="button" class="btn btn-primary" style="background-color: #2d2652;">Submit</button></a>
+                    <button type="submit"  class="btn btn-primary" style="background-color: #2d2652;">Submit</button>
                 </form>
 
             </div>

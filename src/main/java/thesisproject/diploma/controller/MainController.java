@@ -47,8 +47,6 @@ import static thesisproject.diploma.pagination.PaginationConstant.BUTTONS_TO_SHO
 @Controller
 public class MainController {
 
-    private static final int[] PAGE_SIZES = { 5, 10};
-
     @Autowired
     private StockService stockService;
 
@@ -83,8 +81,8 @@ public class MainController {
 
     @RequestMapping(value = {"/addStock"}, method = RequestMethod.GET)
     public ModelAndView addStock(){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if(auth.getPrincipal() == null || auth.getPrincipal().equals("anonymousUser")){
+        boolean isNotLogged = noLogged();
+        if(isNotLogged){
             return new ModelAndView("index");
         }
         ModelAndView modelAndView = new ModelAndView("addToStock");
@@ -96,8 +94,8 @@ public class MainController {
     @RequestMapping(value = {"/getStockPage"}, method = RequestMethod.GET)
     public ModelAndView getStockPage(@RequestParam("page") Optional<Integer> page,
                                      @RequestParam("size") Optional<Integer> size){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if(auth.getPrincipal() == null || auth.getPrincipal().equals("anonymousUser")){
+        boolean isNotLogged = noLogged();
+        if(isNotLogged){
             return new ModelAndView("index");
         }
         return getModelAndView("stockPage", new StockPattern(), page, size);
@@ -113,8 +111,8 @@ public class MainController {
 
     @RequestMapping("/getStock/{id}")
     public ModelAndView showHotel(Model model, @PathVariable("id") Long id) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if(auth.getPrincipal() == null || auth.getPrincipal().equals("anonymousUser")){
+        boolean isNotLogged = noLogged();
+        if(isNotLogged){
             return new ModelAndView("index");
         }
         Stock stock = stockService.getById(id);
@@ -124,8 +122,8 @@ public class MainController {
 
     @RequestMapping("/addToHardware/{id}")
     public ModelAndView addToHard(@PathVariable("id") Long id){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if(auth.getPrincipal() == null || auth.getPrincipal().equals("anonymousUser")){
+        boolean isNotLogged = noLogged();
+        if(isNotLogged){
             return new ModelAndView("index");
         }
         ModelAndView modelAndView = new ModelAndView("addToHardware");
@@ -153,8 +151,8 @@ public class MainController {
             @RequestParam("description") String description,
             @RequestParam("page") Optional<Integer> page,
             @RequestParam("size") Optional<Integer> size) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if(auth.getPrincipal() == null || auth.getPrincipal().equals("anonymousUser")){
+        boolean isNotLogged = noLogged();
+        if(isNotLogged){
             return new ModelAndView("index");
         }
         stockPattern.setName(name);
@@ -167,8 +165,8 @@ public class MainController {
     public ModelAndView searchFromStock(@ModelAttribute StockPattern stockPattern,
                                         @RequestParam("page") Optional<Integer> page,
                                         @RequestParam("size") Optional<Integer> size){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if(auth.getPrincipal() == null || auth.getPrincipal().equals("anonymousUser")){
+        boolean isNotLogged = noLogged();
+        if(isNotLogged){
             return new ModelAndView("index");
         }
         return getModelAndView("stockPage", stockPattern, page, size);
@@ -190,13 +188,13 @@ public class MainController {
     private ModelAndView getModelAndView(String view, StockPattern stockPattern, Optional<Integer> page, Optional<Integer> size){
         ModelAndView modelAndView = new ModelAndView(view);
 
-        int currentPage = page.orElse(1);
-        int pageSize = size.orElse(5);
+        int currentPage = page.orElse(PaginationConstant.INITIAL_PAGE);
+        int pageSize = size.orElse(PaginationConstant.INITIAL_PAGE_SIZE);
 //        int evalPageSize = stockPattern.getPageSize() == null ? PaginationConstant.INITIAL_PAGE_SIZE : stockPattern.getPageSize();
 //        int evalPage = (stockPattern.getPage() == null || stockPattern.getPage() < 1) ? PaginationConstant.INITIAL_PAGE : stockPattern.getPage()-1;
 
         Specification<Stock> specification = new StockSpecification(stockPattern);
-        Pageable pageable = PageRequest.of(currentPage - 1, pageSize, Sort.Direction.DESC, "quantity");
+        Pageable pageable = PageRequest.of(currentPage-1, pageSize, Sort.Direction.DESC, "quantity");
 
         Page<Stock> stocks = stockService.getAllStock(specification, pageable);
 
@@ -213,7 +211,7 @@ public class MainController {
         modelAndView.addObject("selectedPageNumber", pageSize);
         modelAndView.addObject("stock", stocks);
         modelAndView.addObject("pager", pager);
-        modelAndView.addObject("pageSizes", PAGE_SIZES);
+        modelAndView.addObject("pageSizes", PaginationConstant.PAGE_SIZE);
         modelAndView.addObject("pattern", stockPattern);
         return modelAndView;
     }
@@ -223,4 +221,12 @@ public class MainController {
 //        FileInfo downFile = hardwareService.findById(id).getFileTemplate();
 //        return (downFile.getFileData().getContent());
 //    }
+
+    private boolean noLogged(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if(auth.getPrincipal() == null || auth.getPrincipal().equals("anonymousUser")){
+            return true;
+        }
+        return false;
+    }
 }

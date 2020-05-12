@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import thesisproject.diploma.pagination.PaginationConstant;
 import thesisproject.diploma.service.ReportDocxCreate;
 import thesisproject.diploma.entity.Hardware;
 import thesisproject.diploma.pagination.Pager;
@@ -33,8 +34,6 @@ import static thesisproject.diploma.pagination.PaginationConstant.BUTTONS_TO_SHO
 @Controller
 public class HardwareController {
 
-    private static final int[] PAGE_SIZES = { 5, 10};
-
     @Autowired
     private StockService stockService;
 
@@ -49,8 +48,8 @@ public class HardwareController {
 
     @RequestMapping("/getHardware/{id}")
     public ModelAndView showHotel(Model model, @PathVariable("id") Long id) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if(auth.getPrincipal() == null || auth.getPrincipal().equals("anonymousUser")){
+        boolean isNotLogged = noLogged();
+        if(isNotLogged){
             return new ModelAndView("index");
         }
         Hardware hardware = hardwareService.findById(id);
@@ -61,8 +60,8 @@ public class HardwareController {
     @RequestMapping(value = {"/getHardwarePage"}, method = RequestMethod.GET)
     public ModelAndView getHardwarePage(@RequestParam("page") Optional<Integer> page,
                                         @RequestParam("size") Optional<Integer> size){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if(auth.getPrincipal() == null || auth.getPrincipal().equals("anonymousUser")){
+        boolean isNotLogged = noLogged();
+        if(isNotLogged){
             return new ModelAndView("index");
         }
         return getModelAndView("hardwarePage", new HardwarePattern(), page, size);
@@ -72,8 +71,8 @@ public class HardwareController {
     public ModelAndView searchFromStock(@ModelAttribute HardwarePattern hardwarePattern,
                                         @RequestParam("page") Optional<Integer> page,
                                         @RequestParam("size") Optional<Integer> size){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if(auth.getPrincipal() == null || auth.getPrincipal().equals("anonymousUser")){
+        boolean isNotLogged = noLogged();
+        if(isNotLogged){
             return new ModelAndView("index");
         }
         return getModelAndView("hardwarePage", hardwarePattern, page, size);
@@ -89,8 +88,8 @@ public class HardwareController {
             @RequestParam("numberRoom") Long numberRoom,
             @RequestParam("page") Optional<Integer> page,
             @RequestParam("size") Optional<Integer> size) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if(auth.getPrincipal() == null || auth.getPrincipal().equals("anonymousUser")){
+        boolean isNotLogged = noLogged();
+        if(isNotLogged){
             return new ModelAndView("index");
         }
         hardwarePattern.setName(name);
@@ -103,8 +102,8 @@ public class HardwareController {
 
     @RequestMapping(value={"/createReport"}, method = RequestMethod.GET)
     public ModelAndView reportPage(){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if(auth.getPrincipal() == null || auth.getPrincipal().equals("anonymousUser")){
+        boolean isNotLogged = noLogged();
+        if(isNotLogged){
             return new ModelAndView("index");
         }
         ModelAndView modelAndView = new ModelAndView("createReport");
@@ -122,13 +121,13 @@ public class HardwareController {
     private ModelAndView getModelAndView(String view, HardwarePattern hardwarePattern, Optional<Integer> page, Optional<Integer> size){
         ModelAndView modelAndView = new ModelAndView(view);
 
-        int currentPage = page.orElse(1);
-        int pageSize = size.orElse(5);
+        int currentPage = page.orElse(PaginationConstant.INITIAL_PAGE);
+        int pageSize = size.orElse(PaginationConstant.INITIAL_PAGE_SIZE);
 //        int evalPageSize = stockPattern.getPageSize() == null ? PaginationConstant.INITIAL_PAGE_SIZE : stockPattern.getPageSize();
 //        int evalPage = (stockPattern.getPage() == null || stockPattern.getPage() < 1) ? PaginationConstant.INITIAL_PAGE : stockPattern.getPage()-1;
 
         Specification<Hardware> specification = new HardwareSpecification(hardwarePattern);
-        Pageable pageable = PageRequest.of(currentPage - 1, pageSize, Sort.Direction.DESC, "createdDate");
+        Pageable pageable = PageRequest.of(currentPage-1, pageSize, Sort.Direction.DESC, "createdDate");
 
         Page<Hardware> hardwares = hardwareService.getAllHardwares(specification, pageable);
 
@@ -144,9 +143,17 @@ public class HardwareController {
 
         modelAndView.addObject("selectedPageNumber", pageSize);
         modelAndView.addObject("pager", pager);
-        modelAndView.addObject("pageSizes", PAGE_SIZES);
+        modelAndView.addObject("pageSizes", PaginationConstant.PAGE_SIZE);
         modelAndView.addObject("hardwares", hardwares);
         modelAndView.addObject("pattern", hardwarePattern);
         return modelAndView;
+    }
+
+    private boolean noLogged(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if(auth.getPrincipal() == null || auth.getPrincipal().equals("anonymousUser")){
+            return true;
+        }
+        return false;
     }
 }

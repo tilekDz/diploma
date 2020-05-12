@@ -38,7 +38,7 @@
 </div>
 
 <!-- Page content -->
-<div class="w3-content">
+<div class="w3-content" style="max-width: 95%">
 
     <!-- About Section -->
     <div class="w3-row w3-padding-64">
@@ -53,7 +53,7 @@
                 </a>
             </div>
             <form action="#" id="searchForm" th:action="@{/searchStock}" method="post" th:object="${pattern}">
-                <div class="table-responsive">
+                <div class="table">
             <table class="table table-striped table-responsive-md btn-table" data-pagination="true" data-side-pagination="server">
 
                 <thead>
@@ -62,7 +62,7 @@
                     <th><input type="text" class="form-control input-filter" placeholder="Item Description" th:field="*{description}"/></th>
                     <th><input type="text" class="form-control input-filter" placeholder="Type" th:field="*{type}"/></th>
                     <th>Quantity</th>
-                    <th>Details</th>
+                    <!--<th>Details</th>-->
                     <th>Add to Hardware</th>
                     <th><button class="btn btn-primary" type="submit" style="background-color: #2d2652;">Search</button></th>
                 </tr>
@@ -71,12 +71,12 @@
                 <tbody>
                 <th:block th:each="s : ${stock}">
                     <tr>
-                        <td th:text="${s.name}"></td>
+                        <td><a th:href="@{/getStock/__${s.id}__}"><p th:text="${s.name}"></p></a></td>
                         <td th:text="${s.description}">...</td>
                         <td th:text="${s.type}">...</td>
                         <td th:text="${s.quantity}">...</td>
-                        <td><a th:href="@{/getStock/__${s.id}__}"><button type="button" class="btn btn-teal btn-rounded btn-sm m-0">Try</button></a></td>
-                        <td><a th:if="${s.quantity>0}" th:href="@{/addToHardware/__${s.id}__}"> <button type="button" class="btn btn-teal btn-rounded btn-sm m-0">Try</button></a></td>
+                        <!--<td><a th:href="@{/getStock/__${s.id}__}"><button type="button" class="btn btn-teal btn-rounded btn-sm m-0">See</button></a></td>-->
+                        <td><a th:if="${s.quantity>0}" th:href="@{/addToHardware/__${s.id}__}"> <button type="button" class="btn btn-teal btn-rounded btn-sm m-0">Add</button></a></td>
                     </tr>
                 </th:block>
                 </tbody>
