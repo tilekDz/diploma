@@ -91,7 +91,7 @@
                                         th:selected="${pageSize} == ${selectedPageNumber}"></option>
                             </select>
                         </div>
-                        <div th:if="${hardwares.totalPages != 1}"
+                        <div th:if="${hardwares.totalPages != 1 && hardwares.totalPages != 0}"
                              class="form-group col-md-11 pagination-centered">
                             <ul class="pagination">
                                 <li th:class="${hardwares.number == 0} ? disabled"><a

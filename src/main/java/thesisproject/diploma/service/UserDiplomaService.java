@@ -1,6 +1,8 @@
 package thesisproject.diploma.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import thesisproject.diploma.entity.Role;
@@ -33,7 +35,23 @@ public class UserDiplomaService {
         return userDiplomaRepository.save(user);
     }
 
+    public void deleteUser(long id){
+        UserDiploma user = findById(id);
+        if(user != null){
+            user.setActive(false);
+            userDiplomaRepository.save(user);
+        }
+    }
+
+    public Page<UserDiploma> findAllUsers(Pageable pageable){
+        return userDiplomaRepository.findAllByActiveIsTrue(pageable);
+    }
+
     public UserDiploma findUserByEmail(String email) {
         return userDiplomaRepository.findByEmail(email);
+    }
+
+    public UserDiploma findById(long id){
+        return userDiplomaRepository.getOne(id);
     }
 }

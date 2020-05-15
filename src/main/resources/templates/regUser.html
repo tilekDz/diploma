@@ -42,22 +42,22 @@
                 <form name="myform" th:action="@{/regUser}" method="post" th:object="${user}" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="myName">User First Name *</label>
-                        <input id="myName" name="name" class="form-control" type="text">
+                        <input id="myName" required name="name" class="form-control" type="text">
                         <span id="error_name" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label for="myLastName">User Last Name *</label>
-                        <input id="myLastName" name="lastName" class="form-control" type="text">
+                        <input id="myLastName" required name="lastName" class="form-control" type="text">
                         <span id="error_lastName" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label for="email">Username or Email *</label>
-                        <input id="email" name="email"  class="form-control" type="text">
+                        <input id="email" required name="email"  class="form-control" type="text">
                         <span id="error_email" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label for="password">Password *</label>
-                        <input id="password"  class="form-control" name="password" type="password">
+                        <input id="password" required class="form-control" name="password" type="password">
                         <span id="error_password" class="text-danger"></span>
                     </div>
 

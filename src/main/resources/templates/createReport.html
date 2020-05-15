@@ -42,12 +42,12 @@
                 <form name="myform" th:action="@{/createReportWord}" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="age">Room Number *</label>
-                        <input id="age"  class="form-control" type="number" name="numberRoom" placeholder="Room Number" min="1" >
+                        <input id="age" required  class="form-control" type="number" name="numberRoom" placeholder="Room Number" min="1" >
                         <span id="error_age" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label for="age">Name of campus *</label>
-                        <input id="campus"  class="form-control" type="text" name="campusBlock" placeholder="Campus">
+                        <input id="campus" required class="form-control" type="text" name="campusBlock" placeholder="Campus">
                         <span id="error_campus" class="text-danger"></span>
                     </div>
                     <button id="submit" type="submit" value="submit" class="btn btn-primary center" style="background-color: #2d2652;">Submit</button>

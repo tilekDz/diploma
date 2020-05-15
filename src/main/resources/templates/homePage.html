@@ -14,6 +14,7 @@
         letter-spacing: 5px;
     }
 </style>
+
 <body>
 <!-- Navbar (sit on top) -->
 <div class="w3-top" style="color: white;">
@@ -21,14 +22,15 @@
         <a th:href="@{/homePage}" class="w3-bar-item w3-button">Inventory Management System</a>
         <!-- Right-sided navbar links. Hide them on small screens -->
         <div class="w3-right w3-hide-small">
-            <a th:href="@{/getStockPage}"  class="w3-bar-item w3-button">Stock</a>
+            <a th:href="@{/getStockPage}" class="w3-bar-item w3-button">Stock page</a>
+            <a th:href="@{/getHardwarePage}" class="w3-bar-item w3-button">Hardware page</a>
             <a th:href="@{/userPage}" class="w3-bar-item w3-button">User page</a>
             <a th:href="@{/logout}" class="w3-bar-item w3-button">Log out</a>
         </div>
     </div>
 </div>
-
 <!-- Header -->
+<div class="main">
 <header class="w3-display-container w3-content w3-wide" style="max-width:1000px;min-width:500px" id="home">
     <div class="w3-image" style="width:1000px; height:550px">
     <div class="w3-display-bottomleft w3-padding-large" style="text-align: center">
@@ -41,6 +43,7 @@
     </div>
     </div>
 </header>
+</div>
 <!-- Footer -->
 <footer class="w3-center" style="text-align: center; position: absolute; left: 0; bottom: 0; width: 100%; height: 2.5rem; background-color: #2d2652; color: whitesmoke">
     <p title="IMS-AIU" target="_blank" class="w3-hover-text-green">Created by Mederbek Abdyldaev | 2020</p>
