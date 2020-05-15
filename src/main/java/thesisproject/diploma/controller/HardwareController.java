@@ -24,6 +24,7 @@ import thesisproject.diploma.service.UserDiplomaService;
 import thesisproject.diploma.specification.HardwareSpecification;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -113,9 +114,21 @@ public class HardwareController {
     @RequestMapping(value = "/createReportWord", method = RequestMethod.GET)
     public void outToWord(@RequestParam("campusBlock") String campusBlock,
                           @RequestParam("numberRoom") Long numberRoom,
+                          @RequestParam("date") String date,
+                          @RequestParam("paperNum") String paperNum,
                           HttpServletResponse response, RedirectAttributes redirectAttributes){
         response.setHeader("Content-Disposition", "attachment; filename=\"word.docx\"");
-        reportDocxCreate.createDocxFile(response, numberRoom, campusBlock);
+        reportDocxCreate.createDocxFile(response, numberRoom, campusBlock, date, paperNum);
+    }
+
+    @RequestMapping("/deleteHardware/{id}")
+    public ModelAndView deleteHardware(@PathVariable("id") Long id) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if(auth.getPrincipal() == null || auth.getPrincipal().equals("anonymousUser")){
+            return new ModelAndView("index");
+        }
+        hardwareService.deleteHardware(id);
+        return new ModelAndView("redirect:/getHardwarePage");
     }
 
     private ModelAndView getModelAndView(String view, HardwarePattern hardwarePattern, Optional<Integer> page, Optional<Integer> size){

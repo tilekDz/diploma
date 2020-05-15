@@ -185,6 +185,16 @@ public class MainController {
         return "redirect:/getHardwarePage";
     }
 
+    @RequestMapping("/deleteStock/{id}")
+    public ModelAndView deleteHardware(@PathVariable("id") Long id) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if(auth.getPrincipal() == null || auth.getPrincipal().equals("anonymousUser")){
+            return new ModelAndView("index");
+        }
+        stockService.deleteStock(id);
+        return new ModelAndView("redirect:/getStockPage");
+    }
+
     private ModelAndView getModelAndView(String view, StockPattern stockPattern, Optional<Integer> page, Optional<Integer> size){
         ModelAndView modelAndView = new ModelAndView(view);
 

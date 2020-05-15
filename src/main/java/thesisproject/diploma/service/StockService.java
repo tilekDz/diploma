@@ -31,6 +31,14 @@ public class StockService {
         return stockRepository.save(stock);
     }
 
+    public void deleteStock(Long id){
+        Stock stock = getById(id);
+        if(stock!=null){
+            stock.setIsDeleted(true);
+            stockRepository.save(stock);
+        }
+    }
+
     public Stock getById(Long id){
         return stockRepository.getByIdAndIsDeletedFalse(id);
     }

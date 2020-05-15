@@ -32,6 +32,7 @@ import thesisproject.diploma.dto.FileDTO;
 import thesisproject.diploma.dto.FileInfoDTO;
 import thesisproject.diploma.entity.Hardware;
 import thesisproject.diploma.entity.Stock;
+import thesisproject.diploma.entity.UserDiploma;
 import thesisproject.diploma.repository.HardwareRepository;
 
 import javax.imageio.ImageIO;
@@ -71,6 +72,13 @@ public class HardwareService {
         return hardwareRepository.findAll(specification, pageable);
     }
 
+    public void deleteHardware(Long id){
+        Hardware hardware = findById(id);
+        if(hardware!=null){
+            hardware.setIsDeleted(true);
+            save(hardware);
+        }
+    }
 
     public List<Hardware> getAllByRoomNumberAndDeletedFalse(Long number){
         return hardwareRepository.findAllByRoomNumberAndIsDeletedFalse(number);

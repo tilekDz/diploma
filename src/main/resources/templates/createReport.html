@@ -27,7 +27,8 @@
         <!-- Right-sided navbar links. Hide them on small screens -->
         <div class="w3-right w3-hide-small">
             <a th:href="@{/homePage}"  class="w3-bar-item w3-button">Home</a>
-            <a th:href="@{/getStockPage}"  class="w3-bar-item w3-button">Stock</a>
+            <a th:href="@{/getStockPage}" class="w3-bar-item w3-button">Stock page</a>
+            <a th:href="@{/getHardwarePage}" class="w3-bar-item w3-button">Hardware page</a>
             <a th:href="@{/userPage}" class="w3-bar-item w3-button">User page</a>
             <a th:href="@{/logout}" class="w3-bar-item w3-button">Log out</a>
         </div>
@@ -49,6 +50,18 @@
                         <label for="age">Name of campus *</label>
                         <input id="campus" required class="form-control" type="text" name="campusBlock" placeholder="Campus">
                         <span id="error_campus" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="report">Date of report *</label>
+                        <input id="report" required  class="form-control" type="date" name="date" placeholder="Date of report">
+                        <span id="error_report" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="paperNum">Number of paper *</label>
+                        <input id="paperNum" required  class="form-control" type="text" name="paperNum" placeholder="Number of paper ">
+                        <span id="error_paperNum" class="text-danger"></span>
                     </div>
                     <button id="submit" type="submit" value="submit" class="btn btn-primary center" style="background-color: #2d2652;">Submit</button>
                 </form>
