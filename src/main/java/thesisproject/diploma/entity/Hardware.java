@@ -23,6 +23,9 @@ public class Hardware {
     @Column(name = "HARDWARE_TYPE")
     private String type;
 
+    @Column(name = "HARDWARE_CODE")
+    private String code;
+
     @Column(name = "HARDWARE_DESCRIPTION", length = 4000)
     private String description;
 
@@ -49,6 +52,7 @@ public class Hardware {
         this.campusBlock = campusBlock;
         this.roomNumber = roomNumber;
         this.isDeleted = isDeleted;
+        this.code = campusBlock + roomNumber;
         this.createdDate = new Date();
     }
 }
